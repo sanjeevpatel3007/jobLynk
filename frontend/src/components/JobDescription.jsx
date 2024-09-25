@@ -20,15 +20,15 @@ const JobDescription = () => {
     const jobId = params.id;
     const dispatch = useDispatch();
     const navigate = useNavigate(); // For programmatic navigation
-
+  
     const applyJobHandler = async () => {
-      
+         
     if (!user) {
         // Show alert if the user is not logged in
         if (window.confirm('You must log in first to apply for this job. Click OK to log in.')) {
             navigate('/login'); // Redirect to the login page
         }
-        return; // Stop further execution if the user is not logged in
+        return; // Stop further  if the user is not logged in
     }
 
 
