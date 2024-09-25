@@ -7,6 +7,8 @@ import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from '@/utils/constant';
 import { setSingleJob } from '@/redux/jobSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom'; // For redirecting to the login page
+
 
 const JobDescription = () => {
     const {singleJob} = useSelector(store => store.job);
@@ -17,8 +19,20 @@ const JobDescription = () => {
     const params = useParams();
     const jobId = params.id;
     const dispatch = useDispatch();
+    const navigate = useNavigate(); // For programmatic navigation
 
     const applyJobHandler = async () => {
+      
+    if (!user) {
+        // Show alert if the user is not logged in
+        if (window.confirm('You must log in first to apply for this job. Click OK to log in.')) {
+            navigate('/login'); // Redirect to the login page
+        }
+        return; // Stop further execution if the user is not logged in
+    }
+
+
+
         try {
             const res = await axios.get(`${APPLICATION_API_END_POINT}/apply/${jobId}`, {withCredentials:true});
             
